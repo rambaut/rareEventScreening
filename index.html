@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Normal Plot</title>
+    <meta name="description" content="">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.min.js" ></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <style type="text/css">
+    body {
+    	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+		font-weight: 300;
+    }
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: #000;
+        stroke-width: 1px;
+        stroke-opacity: 0.5;
+        shape-rendering: crispEdges;
+    }
+    /*.x.axis path {
+        display: none;
+    }*/
+    .line {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 3px;
+    }
+    </style>
+</head>
+
+<body>
+<form id="parameters">
+  <p>Enter the total number of viruses out there that will be discovered</p>
+  <blockquote>
+  <label for="virus_number">Number of viruses</label>
+  <input type="text" id="virus_number"  /><br />
+  </blockquote>
+  <br />
+
+  <p>Enter the number of viruses that could infect humans and cause outbreaks</p>
+  <blockquote>
+  <label for="potentially_pandemic">Number of potentially pandemic viruses</label>
+  <input type="text" id="potentially_pandemic"  /><br />
+  </blockquote>
+  <br />
+  
+  <p>The accuracy of the test used to identify potentially pandemic viruses</p>
+  <blockquote>
+  <label for="test_accuracy">Accuracy of test</label>
+  <input type="text" id="test_accuracy"  /><br />
+  </blockquote>
+  <br />
+	
+  <p>The cost per virus tested</p>
+  <blockquote>
+  <label for="cost_per_test">Cost per virus discovered and tested</label>
+  <input type="text" id="cost_per_test"  /><br />
+  </blockquote>
+  <br />
+
+  <p>The cost of whatever response is taken for each virus that is tested positive for pandemic potential</p>
+  <blockquote>
+  <label for="cost_per_test">Cost of response per positive test</label>
+  <input type="text" id="cost_per_positive"  /><br />
+  </blockquote>
+  <br />
+
+  <input type="submit" value="Calculate" />
+</form>
+  <hr />
+<p>Number of true positives: <span id="true_positives"></span></p>
+<p>Number of false positives: <span id="false_positives"></span></p>
+<p>Cost of screening program: $<span id="screening_cost"></span></p>
+<p>Cost of responses to positives: $<span id="response_cost"></span></p>
+<p>Total cost: $<span id="total_cost"></span></p>
+</body>
+
+<script type="text/javascript">
+
+	$('#virus_number').val("1000000");
+	$('#potentially_pandemic').val("10");
+	$('#test_accuracy').val("0.95");
+	$('#cost_per_test').val("1200");
+	$('#cost_per_positive').val("1000000");
+
+	$( "#parameters" ).submit(function( event ) {
+		calculate();
+		event.preventDefault();
+	});
+	
+	calculate();
+	
+	function numberWithCommas(x) {
+  		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
+	function calculate() {
+		let virusCount = $('#virus_number').val();
+		let potentiallyPandemicCount = $('#potentially_pandemic').val();
+		let testAccuracy = $('#test_accuracy').val();
+		let costPerTest = $('#cost_per_test').val();
+		let costPerPositive = $('#cost_per_positive').val();
+
+		let truePositive =  potentiallyPandemicCount * testAccuracy;
+		let falsePositive =  (virusCount - potentiallyPandemicCount) * (1 - testAccuracy);
+		let screeningCost = Math.round(virusCount * costPerTest);
+		let responseCost = Math.round((truePositive + falsePositive) * costPerPositive);
+		let totalCost = Math.round(screeningCost + responseCost);
+		$('#true_positives').text(truePositive.toFixed(1));
+		$('#false_positives').text(falsePositive.toFixed(1));
+		$('#screening_cost').text(numberWithCommas(screeningCost));
+		$('#response_cost').text(numberWithCommas(responseCost));
+		$('#total_cost').text(numberWithCommas(totalCost));
+	}
+
+
+
+</script>
+
+</html>
