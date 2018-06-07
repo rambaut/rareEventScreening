@@ -34,35 +34,38 @@
 
 <body>
 <form id="parameters">
-  <p>Enter the total number of viruses out there that will be discovered</p>
+  <p>Enter your estimate for the total number of viruses out there that you will discover and 
+	  test for human transmissibility and pandemic potential.</p>
   <blockquote>
   <label for="virus_number">Number of viruses</label>
   <input type="text" id="virus_number"  /><br />
   </blockquote>
   <br />
 
-  <p>Enter the number of viruses that could infect humans and cause outbreaks</p>
+  <p>Enter the actual number of viruses that could infect humans and cause outbreaks.</p>
   <blockquote>
   <label for="potentially_pandemic">Number of potentially pandemic viruses</label>
   <input type="text" id="potentially_pandemic"  /><br />
   </blockquote>
   <br />
   
-  <p>The accuracy of the test used to identify potentially pandemic viruses</p>
+  <p>What is the accuracy of the machine learning classifier that will be used to identify 
+	  human transmissible viruses?</p>
   <blockquote>
   <label for="test_accuracy">Accuracy of test</label>
   <input type="text" id="test_accuracy"  /><br />
   </blockquote>
   <br />
 	
-  <p>The cost per virus tested</p>
+  <p>How much will it cost to identify and classify each virus?</p>
   <blockquote>
   <label for="cost_per_test">Cost per virus discovered and tested</label>
   <input type="text" id="cost_per_test"  /><br />
   </blockquote>
   <br />
 
-  <p>The cost of whatever response is taken for each virus that is tested positive for pandemic potential</p>
+  <p>What is the cost of whatever response (i.e., development of vaccines, theraputics etc) that will 
+	  taken for each virus that tests positive for human transmissibility and pandemic potential?</p>
   <blockquote>
   <label for="cost_per_test">Cost of response per positive test</label>
   <input type="text" id="cost_per_positive"  /><br />
@@ -81,10 +84,10 @@
 
 <script type="text/javascript">
 
-	$('#virus_number').val("1000000");
-	$('#potentially_pandemic').val("10");
+	$('#virus_number').val("1670000");
+	$('#potentially_pandemic').val("100");
 	$('#test_accuracy').val("0.95");
-	$('#cost_per_test').val("1200");
+	$('#cost_per_test').val("790");
 	$('#cost_per_positive').val("1000000");
 
 	$( "#parameters" ).submit(function( event ) {
